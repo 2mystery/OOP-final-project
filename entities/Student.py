@@ -7,6 +7,7 @@ from actions.snackAction import SnackAction
 from actions.GameAction import GameAction
 from actions.SecreatAction import SecretAction
 
+
 class Student:
     current: Literal["sleep", "snack", "game"]
     total_score: int
