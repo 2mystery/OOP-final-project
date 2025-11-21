@@ -2,6 +2,11 @@ from typing import Literal
 import random
 from typing import Optional
 
+from actions.sleepAction import SleepAction
+from actions.snackAction import SnackAction
+from actions.GameAction import GameAction
+from actions.SecreatAction import SecretAction
+
 class Student:
     current: Literal["sleep", "snack", "game"]
     total_score: int
