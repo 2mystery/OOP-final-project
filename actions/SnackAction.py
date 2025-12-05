@@ -8,7 +8,6 @@ class SnackAction(SecretAction):
         super().start(ctx)
 
     def caught(self, ctx):
-        print("교수님: '누가 수업 시간에 과자를 먹나!!'")
         super().caught(ctx) 
     
     def execute(self, dt, ctx):
