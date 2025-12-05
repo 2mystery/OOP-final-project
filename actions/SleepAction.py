@@ -14,5 +14,3 @@ class SleepAction(SecretAction):
         if not self.is_active or not ctx.get('sleep_pressed', False):
             return
         super().execute(dt, ctx)
-
-        #ctx['student'].progress= self.progress

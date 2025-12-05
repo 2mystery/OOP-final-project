@@ -18,7 +18,6 @@ def draw_mission_bar(surface, x, y, width, height, progress,
 
     inner = pygame.Rect(x + 4, y + 4, width - 8, height - 8)
     pygame.draw.rect(surface, inner_color, inner, border_radius=radius - 4)
-    # 위치 조정 필요
     p = max(0.0, min(progress, 1.0))
     fill_w = int((inner.width - 8) * p)
     if fill_w > 0:
@@ -62,7 +61,6 @@ class Student:
         
         self.next_mission()
 
-        # SnackAction일때만 추가되는 과자 이미지
         self.snackicon_img = pygame.image.load('images/snackicon.png')
         self.snackicon_img = pygame.transform.scale(self.snackicon_img, (140, 140))
 
@@ -70,10 +68,8 @@ class Student:
         if self.remaining_missions:
             mission_cls = random.choice(self.remaining_missions)
             self.target_action = mission_cls()
-            print(f"다음 미션: {mission_cls.__name__}")
         else:
             self.target_action = None
-            print("모든 미션 클리어")
             
     def get_mission_name(self):
         if self.target_action:
@@ -101,9 +97,7 @@ class Student:
             "game_pressed": False
         }
         
-        # 전체 스페이스바로 처리
         if self.target_action and space_pressed:
-            # 현재 미션 종류 확인
             mission_type = type(self.target_action)
             
             if mission_type == SleepAction:
@@ -121,20 +115,16 @@ class Student:
                 elif mission_type == GameAction:
                     self.to_game(ctx)
                     
-        # 스페이스바를 뗐다면 행동 중단
         if not space_pressed:
              self.stop_current_action(ctx)
 
-        # 현재 진행 중인 액션 업데이트
         if self.current_action and self.current_action.is_active:
             self.current_action.execute(dt, ctx)
             
-            # 미션 완료 체크
             if self.current_action.is_complete():
                 action_cls = type(self.current_action)
                 if action_cls in self.remaining_missions:
                     self.remaining_missions.remove(action_cls)
-                    # 성공 후 다음 미션으로 넘어감
                     self.stop_current_action(ctx)
                     if not self.remaining_missions:
                         self.target_action = None
@@ -148,7 +138,6 @@ class Student:
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-        # 현재 미션이 '과자먹기'라면 과자 이미지 넣기
         if isinstance(self.target_action, SnackAction):
             screen.blit(self.snackicon_img, (680, 440))
 

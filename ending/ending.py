@@ -11,20 +11,17 @@ class Ending:
         self.font = pygame.font.SysFont("malgungothic", 60, True)
         self.small_font = pygame.font.Font(None, 32)
 
-        # 버튼 rect (충돌 체크용)
         self.rect = None
-        self.state = Ending.STATE_NORMAL  # 버튼 상태
+        self.state = Ending.STATE_NORMAL  
 
-        base_dir = os.path.dirname(os.path.dirname(__file__))  # 프로젝트 루트
+        base_dir = os.path.dirname(os.path.dirname(__file__)) 
         img_dir = os.path.join(base_dir, "images")
 
-        # 이미지 로드
         self.background_img = pygame.image.load(os.path.join(img_dir, "background.png"))
         self.restart_normal = pygame.image.load(os.path.join(img_dir, "restartbutton.png"))
         self.restart_hover  = pygame.image.load(os.path.join(img_dir, "restartHover.png"))
         self.restart_click  = pygame.image.load(os.path.join(img_dir, "restartClick.png"))
 
-        # 공통 크기로 스케일
         button_size = (360, 350)
 
         self.restart_normal = pygame.transform.scale(self.restart_normal, button_size)
@@ -57,7 +54,7 @@ class Ending:
         elif self.state == Ending.STATE_ACTIVE:
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 self.state = Ending.STATE_NORMAL
-                return True  # 클릭 완료
+                return True  
 
         return False
 
@@ -67,17 +64,15 @@ class Ending:
 
         while running:
             screen.blit(self.background_img, (0,0))
-            self.draw(screen)  # 여기서 self.rect 갱신
+            self.draw(screen)  
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return "quit"
 
-                # mission_fail일 때만 버튼 동작
                 if self.type == "mission_fail":
                     clicked = self.handle_button_event(event)
                     if clicked:
-                        print("다시하기 클릭됨!")
                         return "retry"
                     
                 elif self.type == "mission_success":
@@ -96,26 +91,22 @@ class Ending:
 
     def draw(self, screen):
 
-        if self.type == "mission_success":  # 미션 하나 성공 -> 텍스트만
+        if self.type == "mission_success":  
             text = self.font.render("Mission Completed!", True, (0, 0, 0))
             screen.blit(text, (310, 180))
 
             guide = self.font.render("Click to continue.", True, (0, 0, 0))
             screen.blit(guide, (330, 240))
 
-        elif self.type == "mission_fail":   # 미션 실패 -> 텍스트 + 다시하기 버튼
+        elif self.type == "mission_fail":   
             text= self.font.render("Mission Failed!", True, (255, 0, 0))
             screen.blit(text, (350, 180))
             self.draw_restart_button(screen)
 
-        elif self.type == "class_end": # 모든 미션 성공시 수업 종료 출력
+        elif self.type == "class_end":
             text = self.font.render("Class has ended!", True, (50, 205, 50))
             screen.blit(text, (340, 180))
             self.draw_restart_button(screen)
-
-        else:
-            text = self.font.render("알 수 없는 엔딩", True, (255, 255, 255))
-            screen.blit(text, (200, 200))
             
     def draw_restart_button(self, screen):
         base_img = self.restart_normal

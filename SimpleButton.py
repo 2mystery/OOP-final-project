@@ -6,11 +6,6 @@ class SimpleButton:
     STATE_ACTIVE = 2
 
     def __init__(self, window, loc, img_normal, img_hover, img_active):
-        """
-        window: 그림을 그릴 대상(screen)
-        loc: 버튼의 중심 좌표 (x, y) 튜플
-        img_*: 로드된 pygame image 객체들
-        """
         self.window = window
         self.loc = loc
         self.surfaceUp = img_normal
@@ -45,7 +40,6 @@ class SimpleButton:
         return False
 
     def draw(self):
-        # 상태에 따라 그릴 이미지 결정
         if self.state == SimpleButton.STATE_ACTIVE:
             image_to_draw = self.surfaceDown
         elif self.state == SimpleButton.STATE_HOVER:

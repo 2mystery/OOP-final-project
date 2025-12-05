@@ -8,7 +8,6 @@ class GameAction(SecretAction):
         super().start(ctx) 
 
     def caught(self, ctx):
-        print("교수님: '누가 수업 시간에 게임 소리를 내나!!'")
         super().caught(ctx) 
         
     def execute(self, dt, ctx):
